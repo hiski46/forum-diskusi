@@ -1,19 +1,20 @@
 @extends('layout')
 
-@section('title', 'Tambah Pegawai')
+@section('title', 'Ubah Pegawai')
 @section('pegawai', 'active')
 
 @section('content')
 
     <div class="card mb-4">
-        <h5 class="card-header">Tammbah Pegawai</h5>
+        <h5 class="card-header">Ubah Pegawai</h5>
         <!-- Account -->
-        <form action="/add-pegawai" id="formAccountSettings" method="POST" enctype="multipart/form-data">
+        <form action="/edit-pegawai/{{ $user->id }}" id="formAccountSettings" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
-                    <img src="{{ asset('assets/img/elements/2.jpg') }}" alt="user-avatar" class="d-block rounded"
-                        height="100" width="100" id="uploadedAvatar" style="object-fit: contain;" />
+                    <img src="{{ $user->foto ? asset('storage/foto_profil/' . $user->foto) : asset('assets/img/elements/2.jpg') }}"
+                        alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar"
+                        style="object-fit: contain;" />
                     <div class="button-wrapper">
                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">Upload new photo <i class='bx bx-upload'></i></span>
@@ -47,18 +48,19 @@
                     <div class="mb-3 col-md-6">
                         <label for="name" class="form-label">Nama</label>
                         <input class="form-control" type="text" id="name" name="name" placeholder="Masukkan Nama"
-                            autofocus required value="{{ old('name') }}" />
+                            autofocus required value="{{ $user->name }}" />
                     </div>
                     <div class="mb-3 col-md-6">
                         <label for="email" class="form-label">E-mail</label>
                         <input class="form-control" type="text" id="email" name="email"
-                            placeholder="contoh@example.com" required value="{{ old('email') }}" />
+                            placeholder="contoh@example.com" required value="{{ $user->email }}" />
                     </div>
                     <div class="mb-3 col-md-6">
                         <label for="role" class="form-label">Role</label>
                         <select type="text" class="form-select" id="role" name="role" value="ThemeSelection">
                             @foreach ($role as $r)
-                                <option value="{{ $r->id }}" {{ old('role') == $r->id ? 'selected' : '' }}>
+                                <option value="{{ $r->id }}"
+                                    {{ $user->roles->first()->id == $r->id ? 'selected' : '' }}>
                                     {{ ucfirst($r->name) }}</option>
                             @endforeach
                         </select>

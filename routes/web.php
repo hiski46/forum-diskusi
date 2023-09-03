@@ -34,4 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pegawai', [PegawaiController::class, 'index']);
     Route::get('/add-pegawai', [PegawaiController::class, 'halamanTambah']);
     Route::post('/add-pegawai', [PegawaiController::class, 'tambah']);
+    Route::get('/edit-pegawai/{id}', [PegawaiController::class, 'halamanEdit']);
+    Route::post('/edit-pegawai/{id}', [PegawaiController::class, 'edit']);
 });

@@ -50,4 +50,19 @@ class PegawaiController extends Controller
 
         return back()->onlyInput();
     }
+
+    public function halamanEdit($id)
+    {
+
+        $data['user'] = User::find($id);
+        $data['role'] = Role::where('id', '!=', 3)->get();
+        return view('menu.edit_pegawai', $data);
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+        ]);
+    }
 }
