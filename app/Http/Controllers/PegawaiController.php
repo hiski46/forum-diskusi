@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Notifications\ResetPasswordEmail;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -64,5 +65,39 @@ class PegawaiController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
         ]);
+
+        $user = User::find($id);
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        $user->syncRoles([$request->input('role')]);
+        $update = $user->save();
+
+        if ($update) {
+            return redirect('/pegawai')->with('success', 'Berhasil mengubah data pegawai');
+        }
+    }
+
+    public function delete($id)
+    {
+        $user = $user = User::find($id);
+        if ($user->delete()) {
+            return redirect('/pegawai')->with('success', 'Berhasil menghapus pegawai');
+        }
+    }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+        // $user->password = Hash::make('forum_diskusi');
+        $new_pass = substr(md5(mt_rand()), 0, 8);
+
+        try {
+            $user->notify(new ResetPasswordEmail($user, $new_pass));
+            $user->password = Hash::make($new_pass);
+            $user->save();
+            return redirect('/pegawai')->with('success', 'Berhasil mereset email. Password Baru dikirim melauli email');
+        } catch (\Throwable $th) {
+            return redirect('/pegawai')->with('errors', 'Gagal mengirim email. ' . $th->getMessage());
+        }
     }
 }

@@ -36,4 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-pegawai', [PegawaiController::class, 'tambah']);
     Route::get('/edit-pegawai/{id}', [PegawaiController::class, 'halamanEdit']);
     Route::post('/edit-pegawai/{id}', [PegawaiController::class, 'edit']);
+    Route::get('/delete-pegawai/{id}', [PegawaiController::class, 'delete']);
+    Route::get('/reset-password/{id}', [PegawaiController::class, 'resetPassword']);
+
 });

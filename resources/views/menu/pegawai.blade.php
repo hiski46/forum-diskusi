@@ -25,6 +25,18 @@
 
             </div>
         @endif
+        @if (session()->has('errors'))
+            <div class="row px-4">
+                <div class="col">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ session()->get('errors') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                </div>
+
+            </div>
+        @endif
         <div class="table-responsive text-nowrap px-4 pb-3">
             <table class="table" id="table-pegawai">
                 <thead>
@@ -62,8 +74,12 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/edit-pegawai/{{ $user->id }}"><i
                                                 class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
+                                        <a class="dropdown-item" href="/delete-pegawai/{{ $user->id }}"><i
+                                                class="bx bx-trash me-1"></i>
                                             Delete</a>
+                                        <a class="dropdown-item" href="/reset-password/{{ $user->id }}"><i
+                                                class="bx bx-reset me-1"></i>
+                                            Reset Password</a>
                                     </div>
                                 </div>
                             </td>

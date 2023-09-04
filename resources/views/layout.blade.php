@@ -103,14 +103,14 @@
 
             @can('view users')
     <li class="menu-header small text-uppercase">
-                                                                                              <span class="menu-header-text">Pegawai</span>
-                                                                                            </li>
-                                                                                            <li class="menu-item @yield('pegawai')">
-                                                                                              <a href="/pegawai" class="menu-link">
-                                                                                                <i class="menu-icon tf-icons bx bx-user"></i>
-                                                                                                <div data-i18n="Analytics">Daftar Pegawai</div>
-                                                                                              </a>
-                                                                                            </li>
+                                                                                                                  <span class="menu-header-text">Pegawai</span>
+                                                                                                                </li>
+                                                                                                                <li class="menu-item @yield('pegawai')">
+                                                                                                                  <a href="/pegawai" class="menu-link">
+                                                                                                                    <i class="menu-icon tf-icons bx bx-user"></i>
+                                                                                                                    <div data-i18n="Analytics">Daftar Pegawai</div>
+                                                                                                                  </a>
+                                                                                                                </li>
 @endcan
 
             <!-- Components -->
