@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PegawaiController;
 
@@ -27,9 +28,13 @@ Route::get('/login', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
-        return view('menu.home');
+        return view('home', ['hide_sidebar' => 1]);
     });
     Route::get('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/forum', [ForumController::class, 'index']);
+    Route::get('/tambah-forum', [ForumController::class, 'halamanTambahForum']);
+    Route::post('/tambah-forum/', [ForumController::class, 'tambahForum']);
 
     Route::get('/pegawai', [PegawaiController::class, 'index']);
     Route::get('/add-pegawai', [PegawaiController::class, 'halamanTambah']);
@@ -38,5 +43,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/edit-pegawai/{id}', [PegawaiController::class, 'edit']);
     Route::get('/delete-pegawai/{id}', [PegawaiController::class, 'delete']);
     Route::get('/reset-password/{id}', [PegawaiController::class, 'resetPassword']);
-
 });

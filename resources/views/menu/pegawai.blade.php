@@ -57,7 +57,7 @@
                                     <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                         class="avatar avatar-s pull-up" title="{{ $user->name }}">
                                         <img src="{{ $user->foto ? asset('storage/foto_profil/' . $user->foto) : asset('assets/img/elements/2.jpg') }}"
-                                            alt="Avatar" class="rounded-circle" />
+                                            alt="Avatar" class="rounded-circle" style="object-fit: cover" />
                                     </li>
                                 </ul>
                             </td>

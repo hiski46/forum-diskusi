@@ -30,13 +30,15 @@ class PegawaiController extends Controller
         $data = $request->except(['_token', 'foto', 'role']);
 
         if ($request->has('foto')) {
-            $foto = $request->file('foto');
-            $new_foto_name = uniqid() . '.' . $foto->extension();
-            $foto->storeAs('foto_profil', $new_foto_name, ['disk' => 'public']);
-        } else {
-            return back()->withErrors([
-                'foto' => 'Foto gagal di upload.',
-            ])->onlyInput();
+            if ($request->file('foto')) {
+                $foto = $request->file('foto');
+                $new_foto_name = uniqid() . '.' . $foto->extension();
+                $foto->storeAs('foto_profil', $new_foto_name, ['disk' => 'public']);
+            } else {
+                return back()->withErrors([
+                    'foto' => 'Foto gagal di upload.',
+                ])->onlyInput();
+            }
         }
 
         $data['foto'] = $new_foto_name ?? null;
@@ -66,10 +68,25 @@ class PegawaiController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
         ]);
 
+        if ($request->has('foto')) {
+            if ($request->file('foto')) {
+                $foto = $request->file('foto');
+                $new_foto_name = uniqid() . '.' . $foto->extension();
+                $foto->storeAs('foto_profil', $new_foto_name, ['disk' => 'public']);
+            } else {
+                return back()->withErrors([
+                    'foto' => 'Foto gagal di upload.',
+                ])->onlyInput();
+            }
+        }
+
         $user = User::find($id);
         $user->email = $request->input('email');
         $user->name = $request->input('name');
         $user->syncRoles([$request->input('role')]);
+        if (isset($new_foto_name)) {
+            $user->foto = $new_foto_name;
+        }
         $update = $user->save();
 
         if ($update) {

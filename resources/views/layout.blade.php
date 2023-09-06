@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('/assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('/assets/css/custom.css') }}"/>
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -68,12 +69,14 @@
   </head>
 
   <body>
+    {{-- Page Loader --}}
+    <div class="loading">Loading&#8230;</div>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        @if (!isset($hide_sidebar))
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="/" class="app-brand-link">
               <span class="app-brand-text demo menu-text fw-bolder ms-2">Forum Diskusi</span>
@@ -89,28 +92,28 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="/dashboard" class="menu-link">
+              <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-dashboard"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div data-i18n="Analytics">Home</div>
               </a>
             </li>
-            <li class="menu-item @yield('home')">
-              <a href="/" class="menu-link">
+            <li class="menu-item @yield('forum')">
+              <a href="/forum" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Home</div>
+                <div data-i18n="Analytics">Forum</div>
               </a>
             </li>
 
             @can('view users')
     <li class="menu-header small text-uppercase">
-                                                                                                                  <span class="menu-header-text">Pegawai</span>
-                                                                                                                </li>
-                                                                                                                <li class="menu-item @yield('pegawai')">
-                                                                                                                  <a href="/pegawai" class="menu-link">
-                                                                                                                    <i class="menu-icon tf-icons bx bx-user"></i>
-                                                                                                                    <div data-i18n="Analytics">Daftar Pegawai</div>
-                                                                                                                  </a>
-                                                                                                                </li>
+                                                                                                                                            <span class="menu-header-text">Pegawai</span>
+                                                                                                                                          </li>
+                                                                                                                                          <li class="menu-item @yield('pegawai')">
+                                                                                                                                            <a href="/pegawai" class="menu-link">
+                                                                                                                                              <i class="menu-icon tf-icons bx bx-user"></i>
+                                                                                                                                              <div data-i18n="Analytics">Daftar Pegawai</div>
+                                                                                                                                            </a>
+                                                                                                                                          </li>
 @endcan
 
             <!-- Components -->
@@ -324,10 +327,11 @@
             </li>
           </ul>
         </aside>
+@endif
         <!-- / Menu -->
 
         <!-- Layout container -->
-        <div class="layout-page">
+        <div class="layout-page {{ isset($hide_sidebar) ? 'ps-0' : '' }}">
           <!-- Navbar -->
 
           <nav
@@ -483,7 +487,7 @@
     <!-- Page JS -->
     <script src="{{ asset('/assets/js/dashboards-analytics.js') }}"></script>
     <script src="{{ asset('/assets/js/pages-account-settings-account.js') }}"></script>
-
+    <script src="{{ asset('/assets/js/custom.js') }}"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
