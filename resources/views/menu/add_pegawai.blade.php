@@ -8,7 +8,8 @@
     <div class="card mb-4">
         <h5 class="card-header">Tammbah Pegawai</h5>
         <!-- Account -->
-        <form action="/add-pegawai" id="formAccountSettings" method="POST" enctype="multipart/form-data">
+        <form action="/add-pegawai" id="formAccountSettings" method="POST" enctype="multipart/form-data"
+            onsubmit="showLoader()">
             @csrf
             <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">

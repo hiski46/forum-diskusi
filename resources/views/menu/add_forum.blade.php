@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     @endif
-                    <form action="/tambah-forum" method="POST" enctype="multipart/form-data">
+                    <form action="/tambah-forum" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
                         @csrf
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="judul">Judul</label>

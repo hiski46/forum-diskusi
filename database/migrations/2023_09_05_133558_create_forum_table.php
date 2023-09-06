@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->text('teks');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('type', 10);
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->timestamps();
