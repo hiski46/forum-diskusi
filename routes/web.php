@@ -34,9 +34,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/forum', [ForumController::class, 'index']);
     Route::get('/tambah-forum', [ForumController::class, 'halamanTambahForum']);
-    Route::post('/tambah-forum/', [ForumController::class, 'tambahForum']);
+    Route::post('/tambah-forum', [ForumController::class, 'tambahForum']);
+    Route::get('/edit-forum/{id}', [ForumController::class, 'halamanEditForum']);
+    Route::post('/edit-forum/{id}', [ForumController::class, 'editForum']);
+    Route::get('/detail-forum/{id}', [ForumController::class, 'detailForum']);
+    Route::get('/get-forum', [ForumController::class, 'getForum']);
+    Route::post('/send-comment/{id}', [ForumController::class, 'sendComment']);
+    Route::get('/delete-forum/{id}', [ForumController::class, 'deleteForum']);
+
 
     Route::get('/pegawai', [PegawaiController::class, 'index']);
+    Route::get('/self-edit', [PegawaiController::class, 'halamanSelfEdit']);
+    Route::post('/self-edit', [PegawaiController::class, 'selfEdit']);
     Route::get('/add-pegawai', [PegawaiController::class, 'halamanTambah']);
     Route::post('/add-pegawai', [PegawaiController::class, 'tambah']);
     Route::get('/edit-pegawai/{id}', [PegawaiController::class, 'halamanEdit']);

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\ResetPasswordEmail;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
 {
@@ -112,9 +113,54 @@ class PegawaiController extends Controller
             $user->notify(new ResetPasswordEmail($user, $new_pass));
             $user->password = Hash::make($new_pass);
             $user->save();
-            return redirect('/pegawai')->with('success', 'Berhasil mereset email. Password Baru dikirim melauli email');
+            return redirect('/pegawai')->with('success', 'Berhasil mereset password. Password Baru dikirim melauli email');
         } catch (\Throwable $th) {
             return redirect('/pegawai')->with('errors', 'Gagal mengirim email. ' . $th->getMessage());
+        }
+    }
+
+    public function halamanSelfEdit()
+    {
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $data['user'] = $user;
+        return view('menu.self_edit', $data);
+    }
+
+    public function selfEdit(Request $request)
+    {
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'new_password' => 'nullable|min:8'
+        ]);
+
+        if ($request->has('foto')) {
+            if ($request->file('foto')) {
+                $foto = $request->file('foto');
+                $new_foto_name = uniqid() . '.' . $foto->extension();
+                $foto->storeAs('foto_profil', $new_foto_name, ['disk' => 'public']);
+            } else {
+                return back()->withErrors([
+                    'foto' => 'Foto gagal di upload.',
+                ])->onlyInput();
+            }
+        }
+
+        $user->email = $request->input('email');
+        $user->name = $request->input('name');
+        if (isset($new_foto_name)) {
+            $user->foto = $new_foto_name;
+        }
+        if ($request->input('new_password')) {
+            $user->password = Hash::make($request->input('new_password'));
+        }
+        $update = $user->save();
+
+        if ($update) {
+            return redirect('/pegawai')->with('success', 'Berhasil mengubah Profil');
         }
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('forum', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->text('teks');
+            $table->text('teks')->nullable();
             $table->string('file')->nullable();
             $table->string('type', 10);
             $table->foreignId('created_by')->constrained('users', 'id');

@@ -15,8 +15,10 @@ class Forum extends Model
 
     function komentar()
     {
-        return $this->hasMany('coment', 'forum_id', 'id');
+        return $this->hasMany(Coment::class, 'forum_id', 'id');
     }
-
-    
+    function user()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }
