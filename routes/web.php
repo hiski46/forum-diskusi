@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PegawaiController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +26,19 @@ Route::get('/login', function () {
     return view('auth/login');
 })->name('login');
 
+Route::get('/migrate', function () {
+
+    return Artisan::call('migrate');
+});
+Route::get('/migrate-refresh', function () {
+    return Artisan::call('migrate:refresh');
+});
+Route::get('/seed', function () {
+    return Artisan::call('db:seed');
+});
+Route::get('/symlink', function () {
+    return Artisan::call('storage:link');
+});
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('home', ['hide_sidebar' => 1]);
