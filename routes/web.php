@@ -36,7 +36,7 @@ Route::get('/migrate-refresh', function () {
 Route::get('/seed', function () {
     return Artisan::call('db:seed');
 });
-Route::get('/symlink', function () {
+Route::get('/storage', function () {
     return Artisan::call('storage:link');
 });
 Route::middleware(['auth'])->group(function () {
