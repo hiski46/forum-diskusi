@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('teks')->nullable();
             $table->string('file')->nullable();
             $table->string('type', 10);
+            $table->integer('knowlage');
             $table->foreignId('created_by')->constrained('users', 'id');
             $table->timestamps();
             $table->softDeletes();

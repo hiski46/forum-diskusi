@@ -3,7 +3,7 @@
 @section('title', 'Add Forum')
 @section('semua-forum', 'active open')
 @section($type, 'active')
-    
+
 @section('content')
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forums/</span> Edit Forums</h4>
     <div class="row">
@@ -51,6 +51,22 @@
                                             class="bx bx-comment-detail"></i></span>
                                     <textarea id="teks" name="teks" class="form-control" placeholder="Masukkan konten disini"
                                         aria-label="Masukkan konten disini" aria-describedby="text2">{{ $forum->teks }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="knowlage">Knowlage</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="text2" class="input-group-text"><i class='bx bx-food-menu'></i></span>
+                                    <select id="knowlage" name="knowlage" class="form-select">
+                                        <option value=1 {{ $forum->knowlage == 1 ? 'selected' : '' }}>Tata Tertib
+                                        </option>
+                                        <option value=2 {{ $forum->knowlage == 2 ? 'selected' : '' }}>Rencana Kerja
+                                        </option>
+                                        <option value=3 {{ $forum->knowlage == 3 ? 'selected' : '' }}>Pengalaman
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

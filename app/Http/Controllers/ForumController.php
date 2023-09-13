@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['forum'] = Forum::with(['user'])->get();
+        $forum = Forum::with(['user']);
+        $data['selectedKnowlage'] = null;
+        if ($request->knowlage) {
+            $forum = $forum->where('knowlage', '=', $request->knowlage);
+            $data['selectedKnowlage'] = $request->knowlage;
+        }
+        $data['forum'] = $forum->get();
         return view('menu.forum', $data);
     }
 

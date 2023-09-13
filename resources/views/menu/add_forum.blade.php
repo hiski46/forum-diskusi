@@ -50,6 +50,19 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="knowlage">Knowlage</label>
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    <span id="text2" class="input-group-text"><i class='bx bx-food-menu'></i></span>
+                                    <select id="knowlage" name="knowlage" class="form-select">
+                                        <option value=1>Tata Tertib</option>
+                                        <option value=2>Rencana Kerja</option>
+                                        <option value=3>Pengalaman</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="judul">File</label>
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">

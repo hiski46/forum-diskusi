@@ -15,6 +15,9 @@
         </div>
     @endif
 
+    @php
+        $knowlage = [1 => 'Tata Tertib', 2 => 'Rencana Kerja', 3 => 'Pengalaman'];
+    @endphp
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -28,6 +31,7 @@
                         <tr>
                             <th>Judul</th>
                             <th>Konten</th>
+                            <th>Knowlage</th>
                             @if ($type != 'forum-normal')
                                 <th>File</th>
                             @endif
@@ -42,6 +46,7 @@
                                     {{ $f->judul }}
                                 </td>
                                 <td>{{ $f->teks ?? '-' }}</td>
+                                <td>{{ $knowlage[$f->knowlage] }}</td>
                                 @if ($type != 'forum-normal')
                                     <td class="">
                                         @if ($f->type == 'gambar')

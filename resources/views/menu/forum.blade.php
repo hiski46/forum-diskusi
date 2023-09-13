@@ -24,8 +24,30 @@
             </div>
         </div>
     @endif
+    @php
+        $knowlage = [1 => 'Tata Tertib', 2 => 'Rencana Kerja', 3 => 'Pengalaman'];
+    @endphp
+
 
     <div class="container-md flex-grow-1 container-p-y px-md-5">
+        <form action="/forum" method="get" onsubmit="showLoader()">
+            <div class="row mb-3">
+                <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                        <span id="text2" class="input-group-text"><i class='bx bx-food-menu'></i> Knowlage</span>
+                        <select id="knowlage" name="knowlage" class="form-select">
+                            <option value="">Semua Knowlage</option>
+                            <option value=1 {{ $selectedKnowlage == 1 ? 'selected' : '' }}>Tata Tertib</option>
+                            <option value=2 {{ $selectedKnowlage == 2 ? 'selected' : '' }}>Rencana Kerja</option>
+                            <option value=3 {{ $selectedKnowlage == 3 ? 'selected' : '' }}>Pengalaman</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary"><i class='bx bx-search-alt'></i></button>
+                </div>
+            </div>
+        </form>
         @forelse ($forum->sortByDesc('created_at') as $f)
             <div class="card h-100 mb-3">
                 <div class="card-body">
@@ -42,7 +64,8 @@
                                     <h5 class="card-title">{{ $f->judul }}</h5>
                                     <h6 class="card-subtitle text-muted"><i class='bx bx-user'></i> {{ $f->user->name }}
                                         <i class='bx bx-time'></i>
-                                        {{ date('D d M Y H:i', strtotime($f->created_at)) . ' WIB' }}
+                                        {{ date('D d M Y H:i', strtotime($f->created_at)) . ' WIB' }} <i
+                                            class='bx bx-food-menu'></i> {{ $knowlage[$f->knowlage] }}
                                     </h6>
                                 </td>
 
@@ -60,8 +83,8 @@
                         onerror="failed(event)"></video>
                 @elseif ($f->type == 'document')
                     <div class="px-5">
-                        <a href="{{ asset('storage/file_forum/' . $f->file) }}" target="_blank" class="no-load">Buka File <i
-                                class='bx bx-link-external '></i></a>
+                        <a href="{{ asset('storage/file_forum/' . $f->file) }}" target="_blank" class="no-load">Buka File
+                            <i class='bx bx-link-external '></i></a>
                     </div>
                 @endif
                 <div class="card-body">
@@ -76,6 +99,11 @@
             </div>
 
         @empty
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="text-muted">Tidak ada data ditemukan</h1>
+                </div>
+            </div>
         @endforelse
 
     </div>
