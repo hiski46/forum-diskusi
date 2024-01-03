@@ -71,9 +71,9 @@
                                 <td>{{ date('d/m/y H:i', strtotime($f->created_at)) }}</td>
                                 <td>
                                     @if ($f->approve_at)
-                                        <span class="badge bg-success">Approved</span>
+                                        <span class="badge rounded-pill bg-success">Approved</span>
                                     @elseif ($f->reject_at)
-                                        <span class="badge bg-danger">Rejected</span>
+                                        <span class="badge rounded-pill bg-danger">Rejected</span>
                                     @else
                                         <span class="badge rounded-pill bg-secondary">Processing</span>
                                     @endif
