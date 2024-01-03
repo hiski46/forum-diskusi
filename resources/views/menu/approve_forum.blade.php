@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Daftar Forum')
-@section('semua-forum', 'active open')
-@section($type, 'active')
+@section('title', 'Forum')
+@section('approve', 'active')
+
 @section('content')
     @if (session()->has('success'))
         <div class="row px-4">
@@ -18,11 +18,12 @@
     @php
         $knowlage = [1 => 'Tata Tertib', 2 => 'Rencana Kerja', 3 => 'Pengalaman'];
     @endphp
+
     <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-auto">
-                    <h5>{{ $judul }}</h5>
+                    <h5>Need Approve Forum</h5>
                 </div>
             </div>
             <div class="table-responsive  px-4 pb-3">
@@ -32,9 +33,7 @@
                             <th>Judul</th>
                             <th>Konten</th>
                             <th>Knowlage</th>
-                            @if ($type != 'forum-normal')
-                                <th>File</th>
-                            @endif
+                            <th>File</th>
                             <th>Tanggal</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -48,26 +47,25 @@
                                 </td>
                                 <td>{{ $f->teks ?? '-' }}</td>
                                 <td>{{ $knowlage[$f->knowlage] }}</td>
-                                @if ($type != 'forum-normal')
-                                    <td class="">
-                                        @if ($f->type == 'gambar')
-                                            <img class="img-fluid" src="{{ asset('storage/file_forum/' . $f->file) }}"
-                                                style="width: 100px;: 250px; object-fit:contain;" alt="Card image cap" />
-                                        @elseif ($f->type == 'video')
-                                            <video src="{{ asset('storage/file_forum/' . $f->file) }}"
-                                                class="object-fit-contain" style="width: 100px;: 250px"
-                                                type='video/x-matroska; codecs="theora, vorbis"' autoplay controls
-                                                onerror="failed(event)"></video>
-                                        @elseif ($f->type == 'document')
-                                            <div class="">
-                                                <a href="{{ asset('storage/file_forum/' . $f->file) }}" target="_blank"
-                                                    class="no-load">Buka File <i class='bx bx-link-external '></i></a>
-                                            </div>
-                                        @elseif ($f->type == 'normal')
-                                            -
-                                        @endif
-                                    </td>
-                                @endif
+                                <td class="">
+                                    @if ($f->type == 'gambar')
+                                        <img class="img-fluid" src="{{ asset('storage/file_forum/' . $f->file) }}"
+                                            style="width: 100px;: 250px; object-fit:contain;" alt="Card image cap" />
+                                    @elseif ($f->type == 'video')
+                                        <video src="{{ asset('storage/file_forum/' . $f->file) }}"
+                                            class="object-fit-contain" style="width: 100px;: 250px"
+                                            type='video/x-matroska; codecs="theora, vorbis"' autoplay controls
+                                            onerror="failed(event)"></video>
+                                    @elseif ($f->type == 'document')
+                                        <div class="">
+                                            <a href="{{ asset('storage/file_forum/' . $f->file) }}" target="_blank"
+                                                class="no-load">Buka File <i class='bx bx-link-external '></i></a>
+                                        </div>
+                                    @elseif ($f->type == 'normal')
+                                        -
+                                    @endif
+                                </td>
+
                                 <td>{{ date('d/m/y H:i', strtotime($f->created_at)) }}</td>
                                 <td>
                                     @if ($f->approve_at)
@@ -79,25 +77,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            @if ($f->type != 'normal')
-                                                <a class="dropdown-item no-load"
-                                                    href="{{ asset('storage/file_forum/' . $f->file) }}" download><i
-                                                        class="bx bx-download me-1 "></i> Download</a>
-                                            @endif
-                                            <a class="dropdown-item"
-                                                href="/edit-forum/{{ $f->id }}?type={{ $type }}"><i
-                                                    class="bx bx-edit-alt me-1"></i> Edit</a>
-                                            <a class="dropdown-item"
-                                                href="/delete-forum/{{ $f->id }}?type={{ $type }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
-                                        </div>
+                                    <div class="btn-group btn-group-sm" role="group"
+                                        aria-label="Basic mixed styles example">
+                                        <a href="/approve/{{ $f->id }}" type="button"
+                                            class="btn btn-success">Approve</a>
+                                        <a href="/reject/{{ $f->id }}" type="button"
+                                            class="btn btn-danger">Reject</a>
                                     </div>
                                 </td>
                             </tr>

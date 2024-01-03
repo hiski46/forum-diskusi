@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/logout', [AuthController::class, 'logout']);
 
+
     Route::get('/forum', [ForumController::class, 'index']);
     Route::get('/tambah-forum', [ForumController::class, 'halamanTambahForum']);
     Route::post('/tambah-forum', [ForumController::class, 'tambahForum']);
@@ -54,6 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-forum', [ForumController::class, 'getForum']);
     Route::post('/send-comment/{id}', [ForumController::class, 'sendComment']);
     Route::get('/delete-forum/{id}', [ForumController::class, 'deleteForum']);
+    Route::get('/approve-forum', [ForumController::class, 'halamanApprove']);
+    Route::get('/approve/{id}', [ForumController::class, 'approveForum']);
+    Route::get('/reject/{id}', [ForumController::class, 'rejectForum']);
+
 
 
     Route::get('/pegawai', [PegawaiController::class, 'index']);

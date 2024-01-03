@@ -107,20 +107,28 @@
 
             @can('view users')
     <li class="menu-header small text-uppercase">
-                                                                                                                  <span class="menu-header-text">Pegawai</span>
-                                                                                                                </li>
-                                                                                                                <li class="menu-item @yield('pegawai')">
-                                                                                                                  <a href="/pegawai" class="menu-link">
-                                                                                                                    <i class="menu-icon tf-icons bx bx-user"></i>
-                                                                                                                    <div data-i18n="Analytics">Daftar Pegawai</div>
-                                                                                                                  </a>
-                                                                                                                </li>
+                                                              <span class="menu-header-text">Pegawai</span>
+                                                            </li>
+                                                            <li class="menu-item @yield('pegawai')">
+                                                              <a href="/pegawai" class="menu-link">
+                                                                <i class="menu-icon tf-icons bx bx-user"></i>
+                                                                <div data-i18n="Analytics">Daftar Pegawai</div>
+                                                              </a>
+                                                            </li>
 @endcan
 
 
 
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Forum</span></li>
+            @if (Auth::user()->hasRole('administrator'))
+<li class="menu-item @yield('approve')">
+              <a href="/approve-forum" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-hourglass"></i>
+                <div data-i18n="Analytics">Need Approve</div>
+              </a>
+            </li>
+@endif
             <!-- User interface -->
             <li class="menu-item @yield('semua-forum')">
               <a href="javascript:void(0)" class="menu-link menu-toggle no-load ">

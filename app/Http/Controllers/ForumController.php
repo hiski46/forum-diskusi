@@ -17,6 +17,7 @@ class ForumController extends Controller
             $forum = $forum->where('knowlage', '=', $request->knowlage);
             $data['selectedKnowlage'] = $request->knowlage;
         }
+        $forum = $forum->whereNot('approve_at', null);
         $data['forum'] = $forum->get();
         return view('menu.forum', $data);
     }
@@ -172,6 +173,31 @@ class ForumController extends Controller
         $type = $type == 'all' ? null : $type;
         if ($forum->delete()) {
             return redirect("/get-forum?type=$type")->with('success', 'Berhasil menghapus forum');
+        }
+    }
+
+    public function halamanApprove()
+    {
+        $forum = Forum::with(['user'])->where('approve_at', '=', null)->where('reject_at', '=', null);
+
+        $data['forum'] = $forum->get();
+        return view('menu.approve_forum', $data);
+    }
+
+    public function approveForum($id)
+    {
+        $forum = Forum::find($id);
+        $forum->approve_at = now();
+        if ($forum->save()) {
+            return redirect("/approve-forum")->with('success', 'Berhasil approve forum');
+        }
+    }
+    public function rejectForum($id)
+    {
+        $forum = Forum::find($id);
+        $forum->reject_at = now();
+        if ($forum->save()) {
+            return redirect("/approve-forum")->with('success', 'Berhasil reject forum');
         }
     }
 }
